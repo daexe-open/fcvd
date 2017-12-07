@@ -1,21 +1,21 @@
 {
-  "name": "fvd",
+  "name": "fcvd",
   "version": "1.0.0",
-  "description": "fvd = function virtual dom, fvd support function component and class component! typeof class = function",
+  "description": "fcvd = function & class virtual dom, fcvd support function component and class component!",
   "main": "lib/index.js",
   "scripts": {
     "run:example": "gulp main && http-server ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daexe-open/fvd.git"
+    "url": "git+https://github.com/daexe-open/fcvd.git"
   },
-  "author": "",
+  "author": "chalecao",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/daexe-open/fvd/issues"
+    "url": "https://github.com/daexe-open/fcvd/issues"
   },
-  "homepage": "https://github.com/daexe-open/fvd#readme",
+  "homepage": "https://github.com/daexe-open/fcvd#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",

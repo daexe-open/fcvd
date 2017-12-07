@@ -1,8 +1,15 @@
-## fvd
-fvd = function virtual dom, it's pure, simlpe and fast to render JSX tpl. Now it's depend on babel to transform jsx tpl to the func, we may support selfdefine tpl in next version.
+## fcvd
+fcvd = function & class virtual dom, it's pure, simlpe and fast to render JSX tpl. Now it's depend on babel to transform jsx tpl to the func, we may support selfdefine tpl in next version.
+
+## npm module
+you can install fcvd:
+```
+npm install fcvd --save-dev
+```
 
 ## how to use
-fvd support function component and class component, typeof class = function.
+
+fcvd support function component and class component, typeof class = function.
 for the function component example, the code as follows, you can also see the example folder: 
 ```
 /** @jsx creatNode */
