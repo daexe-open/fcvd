@@ -1,8 +1,9 @@
-## fvdn
-fvdn = function virtual dom node, it's pure, simlpe and fast to render JSX tpl. Now it's depend on babel to transform jsx tpl to the func, we may support selfdefine tpl in next version.
+## fvd
+fvd = function virtual dom, it's pure, simlpe and fast to render JSX tpl. Now it's depend on babel to transform jsx tpl to the func, we may support selfdefine tpl in next version.
 
 ## how to use
-you can see it in the example, the code as follows:
+fvd support function component and class component, typeof class = function.
+for the function component example, the code as follows, you can also see the example folder: 
 ```
 /** @jsx creatNode */
 import {creatNode, initNode}  from "../src/index"
@@ -43,6 +44,28 @@ let app = () => {
 app()
 
 ```
+
+for the function component, see as follows:
+```
+/** @jsx creatNode */
+import { creatNode, initNode, component } from "../src/index"
+class myButton  extends component{
+    constructor(){
+        super()
+        this.count = 0;
+    }
+    addCount() {
+        this.count++;
+        this.$update();
+    }
+    render({ props, children}) {
+        return (<button onClick={this.addCount.bind(this)} {...props}>{children}{this.count}</button>)
+    }
+}
+
+export default myButton
+```
+
 you can run the example with:
 ```
 npm run run:example
