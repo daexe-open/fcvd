@@ -1,5 +1,5 @@
 import { createElement } from './createElement'
-import { isUndefined, isString, isNumber, isFunction, isNull, isNative, isThunk, isText, isSameThunk } from './util'
+import { isUndefined, isString, isNumber, isFunction, isClass, isNull, isNative, isThunk, isText, isSameThunk } from './util'
 import { updateAttributes } from "./attribute"
 /**
  * 更新node
@@ -11,7 +11,63 @@ import { updateAttributes } from "./attribute"
  */
 export function updateElement(node, pre, next, index = 0) {
 
-    if (pre === next) return node
+    if (pre.type != "thunk" && pre === next) return node
+
+    if (!isUndefined(pre) && isUndefined(next)) {
+        return removeNode(node, pre, next, index)
+    }
+
+    if (isUndefined(pre) && !isUndefined(next)) {
+        node.appendChild(createElement(next))
+        return node;
+    }
+
+    if (!isNull(pre) && isNull(next) || isNull(pre) && !isNull(next)) {
+        return replaceNode(node, pre, next, index)
+    }
+
+    if (pre.type !== next.type) {
+        return replaceNode(node, pre, next, index)
+    }
+
+    if (isNative(next)) {
+        if (pre.tagName !== next.tagName) {
+            return replaceNode(node, pre, next, index)
+        }
+
+        updateAttributes(
+            node.childNodes[index],
+            next.attributes,
+            pre.attributes
+        )
+        return diffChildren(node, pre, next, index)
+    }
+
+    if (isText(next)) {
+        if (pre.nodeValue !== next.nodeValue) {
+            node.childNodes[index].nodeValue = next.nodeValue
+        }
+        return node
+    }
+
+    if (isThunk(next)) {
+        if (isSameThunk(pre, next)) {
+            return updateThunk(node, pre, next, index)
+        } else {
+            return replaceThunk(node, pre, next, index)
+        }
+    }
+}
+
+/**
+ * 更新node
+ * @param node -dom node,  parent node of vdom
+ * @param pre  -pre vnode
+ * @param next -next vnode
+ * @param index - child index in parent
+ * @returns node
+ */
+export function updateTarget(node, pre, next, index = 0) {
 
     if (!isUndefined(pre) && isUndefined(next)) {
         return removeNode(node, pre, next, index)
@@ -130,11 +186,18 @@ function updateThunk(node, pre, next, index) {
         children,
         props,
     }
-    let nextNode = next.fn(model)
+    let nextNode
+
+    if (isClass(next.fn)) {
+        nextNode = pre.state.$ins.render(model)
+    } else {
+        nextNode = next.fn(model)
+    }
     //更新块
     updateElement(node, pre.state.vnode, nextNode, index)
     next.state = {
         vnode: nextNode,
+        $ins: pre.state.$ins,
         model
     }
     return node

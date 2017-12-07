@@ -1,4 +1,4 @@
-import { isUndefined, isString, isNumber, isFunction, isNull, isNative, isThunk, isText, isSameThunk } from './util'
+import { isUndefined, isString, isNumber, isFunction, isClass, isNull, isNative, isThunk, isText, isSameThunk } from './util'
 import { setAttributes } from "./attribute"
 import { addEventListeners } from "./event"
 
@@ -16,7 +16,7 @@ function createTextNode(text) {
  * thunk => real node
  * @param vnode
  */
-function createThunk(vnode) {
+function createThunk(vnode, dispatch) {
     let { props, children } = vnode
     let { onCreate } = vnode.options
     let model = {
@@ -24,14 +24,25 @@ function createThunk(vnode) {
         props
     }
     //render model
-    let output = vnode.fn(model)
-    
+    let output, ins;
+    if (isClass(vnode.fn)) {
+        ins = new vnode.fn();
+        output = ins.render(model);
+        ins.$update = ins.$update.bind(this, ()=>{
+            dispatch("updateAll")
+        })
+    } else {
+        output = vnode.fn(model)
+    }
+
+
     let DOMElement = createElement(output)
 
     addEventListeners(DOMElement, output.attributes)
     if (onCreate) onCreate(model)
     vnode.state = {
         vnode: output,
+        $ins: ins,
         model
     }
     return DOMElement
@@ -41,12 +52,12 @@ function createThunk(vnode) {
  * html节点
  * @param {*} vnode 
  */
-function createHTMLElement(vnode) {
+function createHTMLElement(vnode, dispatch) {
     const $el = document.createElement(vnode.tagName)
     setAttributes($el, vnode.attributes)
     addEventListeners($el, vnode.attributes);
     vnode.children
-        .map(createElement)
+        .map( item => { return createElement(item, dispatch)})
         .forEach($el.appendChild.bind($el));
 
     return $el
@@ -64,16 +75,19 @@ function createEmptyHTMLElement() {
  * virtual dom -> dom
  * @param vnode
  */
-export function createElement(vnode) {
+export function createElement(vnode, dispatch) {
+    console.log(this) //$parent
+    console.log(vnode)
     if (isNull(vnode) || isUndefined(vnode)) return
+    
     switch (vnode.type) {
         case 'text':
             return createTextNode(vnode.nodeValue)
         case 'thunk':
-            return createThunk(vnode)
+            return createThunk(vnode, dispatch)
         case 'empty':
             return createEmptyHTMLElement()
         case 'native':
-            return createHTMLElement(vnode)
+            return createHTMLElement(vnode, dispatch)
     }
 }

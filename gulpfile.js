@@ -54,7 +54,7 @@ gulp.task('jsx', function () {
 
 //处理jsx模板
 gulp.task('html', function () {
-    return gulp.src(['./example/index.html','./example/main.js'])
+    return gulp.src(['./example/index.html','./example/*.js'])
         .pipe(gulp.dest('./dist'));
 });
 

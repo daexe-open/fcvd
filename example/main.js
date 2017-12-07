@@ -1,40 +1,30 @@
 /** @jsx creatNode */
-import {creatNode, initNode}  from "../src/index"
+import { creatNode, initNode, component } from "../src/index"
+import MyButton from "./myButton"
+class main extends component {
+    constructor() {
+        super()
 
-
-let count = 0
-
-let MyButton = {
-    render: ({ props, children }) =>{
-        return (<button onClick={addCount} {...props}>{children}{count}</button>)
     }
+    log(e) {
+        console.log(e.target.value);
+    }
+    render({ props, children}) {
+        return (<ul style="list-style: none;">
+            <li className="item" onClick={() => alert('hi!')}>item 1</li>
+            <li className="item">
+                <input type="checkbox" checked={true} />
+                <input type="text" onInput={this.log.bind(this)} />
+            </li>
+            {/* this node will always be updated */}
+            <li forceUpdate={true}>text</li>
+            <MyButton className="button">hello, button</MyButton>
+        </ul>)
+    }
+
 }
 
-let Box ={
-    render: ({ props, children }) => <ul style="list-style: none;">
-        <li className="item" onClick={() => alert('hi!')}>item 1</li>
-        <li className="item">
-            <input type="checkbox" checked={true} />
-            <input type="text" onInput={log} />
-        </li>
-        {/* this node will always be updated */}
-        <li forceUpdate={true}>text</li>
-        <MyButton className="button">hello, button</MyButton>
-    </ul>
-};
+let renderGlobal = initNode(document.body)
+renderGlobal(new main().render({ props:{}, children:[] }))
 
 
-function log(e) {
-    console.log(e.target.value);
-}
-
-function addCount() {
-    count++
-    app()
-}
-
-let render = initNode(document.body)
-let app = () => {
-    render(<Box></Box>)
-}
-app()
