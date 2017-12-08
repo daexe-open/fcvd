@@ -12,7 +12,23 @@ class main extends component {
     log(e) {
         console.log(e.target.value);
     }
+    compute(data){
+        let dd = [];
+        data.forEach((item,index)=>{
+            dd.push(<div>
+                <div class="title">
+                    {item.name}
+                </div>
+                <IF cond={item.href == "22"}>
+                    <div class="spin">{item.href}</div>
+                </IF>
+                </div>
+            )
+        })
+        return dd;
+    }
     render({ props, children }) {
+        const aa = [1, 2]
         return (<ul style="list-style: none;">
             <li className="item" onClick={() => alert('hi!')}>item 1</li>
             <li className="item">
@@ -35,7 +51,7 @@ class main extends component {
             </IF>
             <IF cond={this.aa < 0}>
             sdfsdfsfsd
-            <FOR data={this.data} key="item">
+            <FOR data={this.data} key="item" >
                 <a href="__item.href__" >__item.name__ -  __item.index__</a>
                 <div><span>__item.href__ </span></div>
                 <IF cond={this.aa < 0}>
@@ -43,6 +59,7 @@ class main extends component {
                 </IF>
             </FOR>
             </IF>
+            {this.compute(this.data)}
         </ul>)
     }
 
