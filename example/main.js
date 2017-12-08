@@ -1,9 +1,7 @@
 /** @jsx creatNode */
 import { creatNode, initNode, component } from "../src/index"
 import MyButton from "./myButton"
-import IF from "../src/tpl/if"
-import ELSE from "../src/tpl/else"
-import FOR from "../src/tpl/for"
+import {IF, ELSE, FOR} from "../src/tpl"
 class main extends component {
     constructor() {
         super()
