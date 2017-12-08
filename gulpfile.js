@@ -46,7 +46,7 @@ gulp.task('jsx', function () {
     return gulp.src(['./example/tpl.jsx'])
         .pipe(babel({
             presets: ['env'],
-            plugins: ["transform-react-jsx"]
+            plugins: ["transform-react-jsx","jsx-control-statements"]
         }))
         .pipe(gulp.dest('./dist'));
 });

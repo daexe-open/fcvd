@@ -28,14 +28,16 @@ function createThunk(vnode, dispatch) {
     if (isClass(vnode.fn)) {
         ins = new vnode.fn();
         output = ins.render(model);
-        ins.$update = ins.$update.bind(this, ()=>{
+        ins.$update = ins.$update.bind(this, () => {
             dispatch("updateAll")
         })
     } else {
         output = vnode.fn(model)
     }
 
-
+    if (!output) {
+        return "";
+    }
     let DOMElement = createElement(output)
 
     addEventListeners(DOMElement, output.attributes)
@@ -57,7 +59,7 @@ function createHTMLElement(vnode, dispatch) {
     setAttributes($el, vnode.attributes)
     addEventListeners($el, vnode.attributes);
     vnode.children
-        .map( item => { return createElement(item, dispatch)})
+        .map(item => { return createElement(item, dispatch) })
         .forEach($el.appendChild.bind($el));
 
     return $el
@@ -79,7 +81,7 @@ export function createElement(vnode, dispatch) {
     console.log(this) //$parent
     console.log(vnode)
     if (isNull(vnode) || isUndefined(vnode)) return
-    
+
     switch (vnode.type) {
         case 'text':
             return createTextNode(vnode.nodeValue)
