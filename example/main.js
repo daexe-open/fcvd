@@ -33,10 +33,16 @@ class main extends component {
                 </ELSE>
                 </ELSE>
             </IF>
+            <IF cond={this.aa < 0}>
+            sdfsdfsfsd
             <FOR data={this.data} key="item">
                 <a href="__item.href__" >__item.name__ -  __item.index__</a>
                 <div><span>__item.href__ </span></div>
+                <IF cond={this.aa < 0}>
+                aa 小于 0
+                </IF>
             </FOR>
+            </IF>
         </ul>)
     }
 

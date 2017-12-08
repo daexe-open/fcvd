@@ -4,17 +4,23 @@ class ifBox extends component {
     constructor() {
         super()
     }
-    render({ props, children }) {
+    findChildren(children, key) {
         let index = -1;
-        let elseChildren = children.find((item, i) => {
-            index = i;
-            return item.fn && item.fn.toString().match("else");
+        let _children = children.find((item, i) => {
+            if (item.fn && item.fn.toString().match(key)) {
+                index = i;
+                return true;
+            }
         });
-        children.splice(index, 1);
+        return { index, children: _children }
+    }
+    render({ props, children }) {
+        let elseBox = this.findChildren(children, "else")
+        elseBox.index >= 0 && children.splice(elseBox.index, 1);
         if (props.cond) {
             return (<div>{children}</div>)
         } else {
-            return (<div>{elseChildren}</div>)
+            return (<div>{elseBox.children}</div>)
         }
     }
 }
