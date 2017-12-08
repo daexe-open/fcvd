@@ -1,6 +1,6 @@
 const isType = (type) => (value) => typeof value === type
 const isVType = (type) => (vnode) => vnode.type === type
-export const isUndefined = isType('undefined')
+export const isUndefined = (name) => isType('undefined')(name) && name == undefined
 export const isString = isType('string')
 export const isBool = isType('boolean')
 export const isNumber = isType('number')
@@ -10,6 +10,8 @@ export const isNull = (value) => value === null
 export const isNative = isVType('native')
 export const isThunk = isVType('thunk')
 export const isText = isVType('text')
+export const isArray = Array.isArray
+export const isObj = (name) => Object.prototype.toString.call(name).slice(8,-1) == "Object"
 export const isSameThunk = (pre, next) => pre.fn === next.fn
 
 export const isEventProp = (name) => /^on/.test(name)
@@ -19,10 +21,34 @@ export const isCustomProp = (name) => isEventProp(name) || name === 'forceUpdate
 export const JSON2Hash = (data, path) => {
     let res = {};
     Object.keys(data).forEach(key => {
-        res[path+"."+key] = data[key]
+        res[path + "." + key] = data[key]
         if (typeof data[key] == "object") {
-            res = Object.assign(res, JSON2Hash(data[key], path+"."+key))
+            res = Object.assign(res, JSON2Hash(data[key], path + "." + key))
         }
     })
     return res;
+}
+
+//深度克隆
+export const deepClone = (obj) => {
+    var result;
+    //确定result的类型
+    if (isObj(obj)) {
+        result = {};
+    } else if (isArray(obj)) {
+        result = [];
+    } else {
+        return obj;
+    }
+    for (var key in obj) {
+        var copy = obj[key];
+        if (isObj(copy)) {
+            result[key] = deepClone(copy);//递归调用
+        } else if (isArray(copy)) {
+            result[key] = deepClone(copy);
+        } else {
+            result[key] = obj[key];
+        }
+    }
+    return result;
 }

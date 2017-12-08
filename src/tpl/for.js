@@ -1,6 +1,6 @@
 /** @jsx creatNode */
 import { creatNode, initNode, component } from "../index"
-import { JSON2Hash } from "../util"
+import { JSON2Hash, deepClone } from "../util"
 class forBox extends component {
     constructor() {
         super()
@@ -25,16 +25,19 @@ class forBox extends component {
             item.attributes && this.handleAttribute(item.attributes, hashData)
             item.children && this.handleChildren(item.children, hashData)
         })
+        return children;
     }
     render({ props, children }) {
         if (props.data) {
             let hashData = "";
+            let allChidren = [];
             props.data.forEach((item, i) => {
                 item.index = i;
                 hashData = JSON2Hash(item, props.key || "item");
-                this.handleChildren(children, hashData);
+                allChidren = allChidren.concat(this.handleChildren(deepClone(children), hashData));
             })
-            return (<div>{children}</div>)
+
+            return (<div>{allChidren}</div>)
         } else {
             return ("")
         }

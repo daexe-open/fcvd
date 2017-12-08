@@ -7,7 +7,7 @@ class main extends component {
         super()
         this.aa = -1;
         this.bb = -1;
-        this.data = [{ name: "11", href: "22" }]
+        this.data = [{ name: "11", href: "22" }, { name: "33", href: "44" }]
     }
     log(e) {
         console.log(e.target.value);
