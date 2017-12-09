@@ -32,7 +32,16 @@ function createThunk(vnode, dispatch) {
             dispatch("updateAll")
         })
     } else {
-        output = vnode.fn(model)
+        try {
+            output = vnode.fn(model)
+        } catch (e) {
+            //兼容对于打包工具会把class 打包出一个包裹的function，这时候会误判
+            ins = new vnode.fn();
+            output = ins.render(model);
+            ins.$update = ins.$update.bind(this, () => {
+                dispatch("updateAll")
+            })
+        }
     }
 
     if (!output) {

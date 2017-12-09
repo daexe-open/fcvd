@@ -191,7 +191,12 @@ function updateThunk(node, pre, next, index) {
     if (isClass(next.fn)) {
         nextNode = pre.state.$ins.render(model)
     } else {
-        nextNode = next.fn(model)
+        try {
+            nextNode = next.fn(model)
+        } catch (e) {
+            //兼容对于打包工具会把class 打包出一个包裹的function，这时候会误判
+            nextNode = pre.state.$ins.render(model)
+        }
     }
     //更新块
     updateElement(node, pre.state.vnode, nextNode, index)
