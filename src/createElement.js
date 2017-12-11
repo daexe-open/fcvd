@@ -87,8 +87,8 @@ function createEmptyHTMLElement() {
  * @param vnode
  */
 export function createElement(vnode, dispatch) {
-    console.log(this) //$parent
-    console.log(vnode)
+    // console.log(this) //$parent
+    // console.log(vnode)
     if (isNull(vnode) || isUndefined(vnode)) return
 
     switch (vnode.type) {

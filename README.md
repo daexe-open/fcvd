@@ -1,5 +1,5 @@
 ## fcvd
-fcvd = function & class virtual dom, it's pure, simlpe and fast to render JSX tpl. Now it's depend on babel to transform jsx tpl to the func, but fcvd extend self template grama. youcan see the detail below.
+fcvd = function & class virtual dom, it's pure, simlpe and fast to render JSX tpl. Now it's depend on babel to transform jsx tpl to the func, but fcvd extend self template grama. you can see the detail below.
 
 ## npm module
 you can install fcvd:
@@ -10,6 +10,7 @@ npm install fcvd --save-dev
 ## how to use
 
 fcvd support function component and class component, typeof class = function.
+
 for the function component example, the code as follows, you can also see the example folder: 
 ```
 /** @jsx creatNode */
@@ -52,7 +53,7 @@ app()
 
 ```
 
-for the function component, see as follows:
+for the class component, see as follows:
 ```
 /** @jsx creatNode */
 import { creatNode, initNode, component } from "../src/index"
@@ -155,5 +156,7 @@ let renderGlobal = initNode(document.body)
 renderGlobal(new main().render({ props: {}, children: [] }))
 
 ```
-## todo
-many!
+## release
+* v1.1.0 fix many bugs;
+    * add ins to fix bug: update the func element
+    * fix bug, shou test type after, because pre may undefined when create new node

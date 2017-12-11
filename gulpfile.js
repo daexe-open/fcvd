@@ -59,7 +59,7 @@ gulp.task('html', function () {
 });
 
 gulp.task('main', ['html'], function () {
-    return gulp.src('./dist/main.js')
+    return gulp.src(['./dist/init.js'])
         .pipe(browserify({
             transform: [babelify.configure({
                 presets: ['es2015'],

@@ -1,5 +1,6 @@
 /** @jsx creatNode */
 import { creatNode, initNode, component } from "../index"
+import {deepClone} from "../util"
 class elseBox extends component {
     constructor() {
         super()
@@ -11,9 +12,10 @@ class elseBox extends component {
                 index = i;
                 return item.fn && item.fn.toString().match("else");
             });
-            children.splice(index, 1);
+            let _children = deepClone(children)
+            _children.splice(index, 1);
             if (props.cond) {
-                return (<div>{children}</div>)
+                return (<div>{_children}</div>)
             } else {
                 return (<div>{elseChildren}</div>)
             }

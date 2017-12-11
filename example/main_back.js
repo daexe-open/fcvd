@@ -24,12 +24,12 @@ class main extends component {
         let dd = [];
         data.forEach((item,index)=>{
             dd.push(<div>
-                    <div class="title">
-                        {item.name}
-                    </div>
-                    <IF cond={item.href == "22"}>
-                        <div class="spin">{item.href}</div>
-                    </IF>
+                <div class="title">
+                    {item.name}
+                </div>
+                <IF cond={item.href == "22"}>
+                    <div class="spin">{item.href}</div>
+                </IF>
                 </div>
             )
         })
@@ -43,6 +43,7 @@ class main extends component {
                 <input type="checkbox" checked={true} />
                 <input type="text" onInput={this.log.bind(this)} />
             </li>
+            {/* this node will always be updated */}
             <li onClick={this.handleClick2.bind(this)} forceUpdate={true}>text</li>
             <MyButton className="button">hello, button</MyButton>
             <IF cond={this.aa > 0}>
@@ -59,9 +60,14 @@ class main extends component {
             <IF cond={this.aa < 0}>
             sdfsdfsfsd
             <FOR data={this.data} key="item" >
-                <a href="__item.href__" >__item.name__ -  __item.index__</a><br/>
+                <a href="__item.href__" >__item.name__ -  __item.index__</a>
+                <div><span>__item.href__ </span></div>
+                <IF cond={this.aa < 0}>
+                aa 小于 0
+                </IF>
             </FOR>
             </IF>
+            {this.compute(this.data)}
         </ul>)
     }
 

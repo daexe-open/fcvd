@@ -10,8 +10,8 @@ import { updateAttributes } from "./attribute"
  * @returns node
  */
 export function updateElement(node, pre, next, index = 0) {
-
-    if (pre.type != "thunk" && pre === next) return node
+    if(!node) return;
+    if ( pre === next && pre.type != "thunk") return node //fix bug, shou test type after, because pre may undefined when create new node
 
     if (!isUndefined(pre) && isUndefined(next)) {
         return removeNode(node, pre, next, index)
@@ -168,7 +168,7 @@ function diffChildren(node, pre, next, index) {
     let preChildren = pre.children || [],
         nextChildren = next.children || [],
         i,
-        nodeChildren = Array.prototype.slice.call(node.children)
+        nodeChildren = Array.prototype.slice.call(node.childNodes) // fix bug: node.children => node.childNodes, node.childNodes contains text node, but node.children doesn't
 
     for (i = 0; i < preChildren.length || i < nextChildren.length; i++) {
         updateElement(nodeChildren[index], preChildren[i], nextChildren[i], i)

@@ -1,6 +1,7 @@
 /** @jsx creatNode */
 import { creatNode, initNode, component } from "../index"
 import { JSON2Hash, deepClone } from "../util"
+
 class forBox extends component {
     constructor() {
         super()
