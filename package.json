@@ -1,6 +1,6 @@
 {
   "name": "fcvd",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "fcvd = function & class virtual dom, fcvd support function component and class component!",
   "main": "src/index.js",
   "scripts": {
