@@ -155,6 +155,9 @@ class main extends component {
 let renderGlobal = initNode(document.body)
 renderGlobal(new main().render({ props: {}, children: [] }))
 
+//simple usage, just create DOM with virtual DOM
+document.body.appendChild(createDom(new main().render()))
+
 ```
 ## release
 * v1.1.0 fix many bugs;

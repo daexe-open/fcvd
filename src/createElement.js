@@ -65,8 +65,8 @@ function createThunk(vnode, dispatch) {
  */
 function createHTMLElement(vnode, dispatch) {
     const $el = document.createElement(vnode.tagName)
-    setAttributes($el, vnode.attributes)
-    addEventListeners($el, vnode.attributes);
+    vnode.attributes && setAttributes($el, vnode.attributes)
+    vnode.attributes && addEventListeners($el, vnode.attributes);
     vnode.children
         .map(item => { return createElement(item, dispatch) })
         .forEach($el.appendChild.bind($el));

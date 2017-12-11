@@ -30,6 +30,7 @@ export default function initNode(container) {
 
         }
         updateTarget(context, oldNode, vnode)
+        // update oldnode, or may cause diff vdom bug
         oldNode = vnode
     }
 
