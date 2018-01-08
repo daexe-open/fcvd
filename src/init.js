@@ -37,15 +37,13 @@ export default function initNode(container) {
 
     return (_ins) => {
         let vnode = _ins;
-        try {
+        if("render" in _ins) {
             vnode = _ins.render()
             ins = _ins;
             _ins.$update = _ins.$update.bind(this, () => {
                 dispatch("updateAll")
             })
-        } catch (e) {
-
         }
-        return node ? update(vnode.$dom || vnode) : create(vnode.$dom || vnode)
+        return node ? update(vnode) : create(vnode)
     }
 }

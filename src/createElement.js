@@ -29,17 +29,18 @@ function createThunk(vnode, dispatch) {
         ins = new vnode.fn();
         output = ins.render(model);
         ins.$update = ins.$update.bind(this, () => {
-            dispatch("updateAll")
+            dispatch && dispatch("updateAll")
         })
     } else {
         try {
             output = vnode.fn(model)
         } catch (e) {
-            //兼容对于打包工具会把class 打包出一个包裹的function，这时候会误判
+            // console.log(e)
+            //兼容对于打包工具会把class 打包出一个包裹的function，这时候会误判, 所以fu失败就还是采用new的形式
             ins = new vnode.fn();
             output = ins.render(model);
             ins.$update = ins.$update.bind(this, () => {
-                dispatch("updateAll")
+                dispatch && dispatch("updateAll")
             })
         }
     }
@@ -48,7 +49,6 @@ function createThunk(vnode, dispatch) {
         return "";
     }
     let DOMElement = createElement(output)
-
     addEventListeners(DOMElement, output.attributes)
     if (onCreate) onCreate(model)
     vnode.state = {
@@ -64,7 +64,7 @@ function createThunk(vnode, dispatch) {
  * @param {*} vnode 
  */
 function createHTMLElement(vnode, dispatch) {
-    const $el = document.createElement(vnode.tagName)
+    let $el = document.createElement(vnode.tagName)
     vnode.attributes && setAttributes($el, vnode.attributes)
     vnode.attributes && addEventListeners($el, vnode.attributes);
     vnode.children
@@ -90,7 +90,6 @@ export function createElement(vnode, dispatch) {
     // console.log(this) //$parent
     // console.log(vnode)
     if (isNull(vnode) || isUndefined(vnode)) return
-
     switch (vnode.type) {
         case 'text':
             return createTextNode(vnode.nodeValue)

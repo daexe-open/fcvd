@@ -5,7 +5,7 @@ export const isString = isType('string')
 export const isBool = isType('boolean')
 export const isNumber = isType('number')
 export const isFunction = (name) => name.toString().match("function")
-export const isClass = (name) => name.toString().match("class")
+export const isClass = (name) => name.toString().match("class ") //change 2 "class " to avoid match className
 export const isNull = (value) => value === null
 export const isNative = isVType('native')
 export const isThunk = isVType('thunk')
@@ -27,6 +27,17 @@ export const JSON2Hash = (data, path) => {
         }
     })
     return res;
+}
+
+export const findChildren = (children, key) =>{
+    let index = -1;
+    let _children = children.reverse().find((item, i) => {
+        if (item.fn && item.fn.toString().match(key)) {
+            index = i;
+            return true;
+        }
+    });
+    return { index, children: _children }
 }
 
 //深度克隆

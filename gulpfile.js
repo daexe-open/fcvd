@@ -54,12 +54,12 @@ gulp.task('jsx', function () {
 
 //处理jsx模板
 gulp.task('html', function () {
-    return gulp.src(['./example/index.html','./example/*.js'])
+    return gulp.src(['./example/*.html','./example/*.js'])
         .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('main', ['html'], function () {
-    return gulp.src(['./dist/init.js'])
+    return gulp.src(['./dist/init.js','./dist/simple.js'])
         .pipe(browserify({
             transform: [babelify.configure({
                 presets: ['es2015'],

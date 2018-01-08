@@ -1,4 +1,3 @@
-/** @jsx creatNode */
 import { creatNode, initNode, component } from "../index"
 import { JSON2Hash, deepClone } from "../util"
 
@@ -8,8 +7,10 @@ class forBox extends component {
     }
     handlePath(item, hashData) {
         let paths = item.match(/__(.*?)__/g)
+        let d = "";
         paths && paths.forEach(path => {
-            item = item.replace(path, hashData[path.substring(2, path.length - 2)])
+            d = hashData[path.substring(2, path.length - 2)]
+            item = item.replace(path, typeof d == "undefined" ? "" : d)
         })
         return item;
     }
@@ -20,6 +21,7 @@ class forBox extends component {
     }
     handleChildren(children, hashData) {
         children.forEach(item => {
+
             if (item.nodeValue) {
                 item.nodeValue = this.handlePath(item.nodeValue, hashData)
             }

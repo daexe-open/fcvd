@@ -1,7 +1,6 @@
 /** @jsx creatNode */
-import { creatNode, initNode, component } from "../src/index"
+import { creatNode, initNode, component, IF, ELSE, FOR } from "./index"
 import MyButton from "./myButton"
-import {IF, ELSE, FOR} from "../src/tpl"
 class main extends component {
     constructor() {
         super()
@@ -61,7 +60,7 @@ class main extends component {
             sdfsdfsfsd
             <FOR data={this.data} key="item" >
                 <div>
-                    <a href="__item.href__" >__item.name__ -  __item.index__</a>
+                    <a href="__item.href__" >__item.name__ -  __item.index__ __item.test__</a>
                     <div><span>__item.href__ </span></div>
                     <IF cond={this.aa < 0}>
                     aa 小于 0

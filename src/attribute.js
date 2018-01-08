@@ -39,7 +39,12 @@ export function setAttribute(node, key, value) {
     } else if (typeof value === 'boolean') {
         setBooleanProp(node, key, value);
     } else {
-        node.setAttribute(key, value);
+        //remove attr when no value, fix bug tag a , if have href like <a href>, browser will reload
+        if (value !== "") {
+            node.setAttribute(key, value);
+        }else{
+            node.removeAttribute(key);
+        }
     }
 }
 

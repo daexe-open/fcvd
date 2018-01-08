@@ -1,5 +1,5 @@
 /** @jsx creatNode */
-import { creatNode, initNode, component } from "../src/index"
+import { creatNode, initNode, component } from "./index"
 class myButton  extends component{
     constructor(){
         super()
